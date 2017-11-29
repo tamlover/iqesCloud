@@ -16,6 +16,6 @@ public class IqescloudApplication {
 
 	@RequestMapping(value = "/")
 	public String hello() {
-		return "hello boy~~~";
+		return "hello boy~~~~~";
 	}
 }
