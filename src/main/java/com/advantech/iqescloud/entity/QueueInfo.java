@@ -25,7 +25,7 @@ public class QueueInfo extends IdEntity {
      *
      *座位号
      * */
-    private long tableId;
+    private Long tableId;
     /**
      *
      *座位号
@@ -41,7 +41,7 @@ public class QueueInfo extends IdEntity {
      *
      *桌型
      * */
-    private long tableTypeId;
+    private  Long tableTypeId;
     /**
      *
      *排队开始时间
@@ -78,6 +78,18 @@ public class QueueInfo extends IdEntity {
      */
     private String firstExtractTime;
 
+    /**
+     * 排队状态
+     */
+    private String queueState;
+
+    public String getQueueState() {
+        return queueState;
+    }
+
+    public void setQueueState(String queueState) {
+        this.queueState = queueState;
+    }
 
     public String getCustomerName() {
         return customerName;
@@ -103,7 +115,7 @@ public class QueueInfo extends IdEntity {
         this.eatNumber = eatNumber;
     }
 
-    public long getTableId() {
+    public Long getTableId() {
         return tableId;
     }
 

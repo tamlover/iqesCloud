@@ -16,7 +16,7 @@ public class RabbitMqSendMessageUtils {
     public static JSONObject sendMessage(RabbitCarrier rabbitCarrier, String restaurantId) {
 
         RPCClient rpcClient = null;
-        String response = null;
+        String response;
         JSONObject jsonObject=null;
 
         String message= JSON.toJSONString(rabbitCarrier);

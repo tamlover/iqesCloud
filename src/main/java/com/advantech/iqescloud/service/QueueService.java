@@ -1,15 +1,22 @@
 package com.advantech.iqescloud.service;
 
 import com.advantech.iqescloud.entity.DTO.QueueInfoDTO;
+import com.advantech.iqescloud.entity.QueueInfo;
 import com.advantech.iqescloud.entity.RabbitCarrier;
+import com.advantech.iqescloud.repository.QueueInfoDao;
 import com.advantech.iqescloud.utils.RabbitMqSendMessageUtils;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
 public class QueueService {
+
+    @Autowired
+    private QueueInfoDao queueInfoDao;
 
 
     public JSONObject virtualQueue(QueueInfoDTO queueInfoDTO){
@@ -91,6 +98,13 @@ public class QueueService {
 
         JSONObject jsonObject= RabbitMqSendMessageUtils.sendMessage(rabbitCarrier,String.valueOf(restaurantID));
         return jsonObject;
+    }
+
+    public void saveQueueHistory(String jsonData){
+
+        QueueInfo queueInfo= JSON.parseObject(jsonData,QueueInfo.class);
+        queueInfoDao.save(queueInfo);
+        System.out.println("save queueHistory once");
     }
 
 }
