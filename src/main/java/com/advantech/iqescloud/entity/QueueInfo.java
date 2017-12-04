@@ -56,7 +56,7 @@ public class QueueInfo extends IdEntity {
      *
      *排队号
      * */
-    private Long queueId;
+    private String queueNumber;
     /**
      *
      *抽号次数
@@ -82,6 +82,18 @@ public class QueueInfo extends IdEntity {
      * 排队状态
      */
     private String queueState;
+
+    public void setTableId(Long tableId) {
+        this.tableId = tableId;
+    }
+
+    public Long getTableTypeId() {
+        return tableTypeId;
+    }
+
+    public void setTableTypeId(Long tableTypeId) {
+        this.tableTypeId = tableTypeId;
+    }
 
     public String getQueueState() {
         return queueState;
@@ -139,14 +151,6 @@ public class QueueInfo extends IdEntity {
         this.extractFlag = extractFlag;
     }
 
-    public long getTableTypeId() {
-        return tableTypeId;
-    }
-
-    public void setTableTypeId(long tableTypeId) {
-        this.tableTypeId = tableTypeId;
-    }
-
     public String getQueueStartTime() {
         return queueStartTime;
     }
@@ -163,12 +167,12 @@ public class QueueInfo extends IdEntity {
         this.queueEndTime = queueEndTime;
     }
 
-    public Long getQueueId() {
-        return queueId;
+    public String getQueueNumber() {
+        return queueNumber;
     }
 
-    public void setQueueId(Long queueId) {
-        this.queueId = queueId;
+    public void setQueueNumber(String queueNumber) {
+        this.queueNumber = queueNumber;
     }
 
     public Integer getExtractCount() {
@@ -215,7 +219,7 @@ public class QueueInfo extends IdEntity {
                 ", tableTypeId=" + tableTypeId +
                 ", queueStartTime='" + queueStartTime + '\'' +
                 ", queueEndTime='" + queueEndTime + '\'' +
-                ", queueId=" + queueId +
+                ", queueId=" + queueNumber +
                 ", extractCount=" + extractCount +
                 ", callCount=" + callCount +
                 ", seatFlag=" + seatFlag +

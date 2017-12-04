@@ -37,22 +37,22 @@ public class Dispatcher {
                 switch (methodName){
                     case "updateInfo":restaurantService.updateInfo(rabbitCarrie.getParameter());break;
                     default:
-                        System.out.println("no-method-match");
+                        System.out.println("no-restaurantInfoService-method-match");break;
                 }break;
             case "TestService":
                 switch (methodName){
                     case "uploadPhoto":testService.uploadPhoto(rabbitCarrie.getParameter());break;
                     default:
-                        System.out.println("no-method-match");
-                }
+                        System.out.println("no-TestService-method-match");break;
+                }break;
             case "QueueService":
                 switch (methodName){
-                    case "saveQueueHistoty":queueService.saveQueueHistory(rabbitCarrie.getParameter());break;
+                    case "saveQueueHistory":queueService.saveQueueHistory(rabbitCarrie.getParameter());break;
                     default:
-                        System.out.println("no-method-match");
-                }
+                        System.out.println("no-QueueService-method-match");break;
+                }break;
             default:
-                System.out.println("no-service-match");
+                System.out.println("no-any-service-match");break;
         }
     }
 }

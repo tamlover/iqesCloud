@@ -17,8 +17,19 @@ public class IqesUser extends IdEntity {
     /**信誉值*/
     private Integer creditValue;
 
+    /**暂时的唯一标识*/
+    private String uniqueName;
+
     public Integer getCreditValue() {
         return creditValue;
+    }
+
+    public String getUniqueName() {
+        return uniqueName;
+    }
+
+    public void setUniqueName(String uniqueName) {
+        this.uniqueName = uniqueName;
     }
 
     public void setCreditValue(Integer creditValue) {

@@ -2,12 +2,19 @@ package com.advantech.iqescloud.service;
 
 import com.advantech.iqescloud.entity.DTO.UserDTO;
 import com.advantech.iqescloud.entity.IqesUser;
+import com.advantech.iqescloud.entity.RabbitCarrier;
+import com.advantech.iqescloud.entity.Restaurant;
 import com.advantech.iqescloud.entity.UserFeedback;
+import com.advantech.iqescloud.repository.RestaurantDao;
 import com.advantech.iqescloud.repository.UserDao;
 import com.advantech.iqescloud.repository.UserFeedbackDao;
+import com.advantech.iqescloud.utils.RabbitMqSendMessageUtils;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -23,10 +30,14 @@ public class UserService {
     @Autowired
     private UserFeedbackDao userFeedbackDao;
 
-    public String saveUser(UserDTO userDTO){
+    @Autowired
+    private RestaurantDao restaurantDao;
 
-        IqesUser user=new IqesUser();
-        if (userDTO.getUserName()==null){
+
+    public String saveUser(UserDTO userDTO) {
+
+        IqesUser user = new IqesUser();
+        if (userDTO.getUserName() == null) {
             user.setUserName("unnamed");
         }
 
@@ -34,21 +45,22 @@ public class UserService {
         user.setMemberIntegral(0);
         user.setTel(userDTO.getTel());
         user.setPassword(userDTO.getPassword());
+        user.setUniqueName("unnamed" + "_" + System.currentTimeMillis());
 
         userDao.save(user);
         return "注册成功";
     }
 
-    public UserDTO login(String tel,String password) throws Exception {
+    public UserDTO login(String tel, String password) throws Exception {
         UserDTO userDTO;
-        IqesUser u=userDao.findByTel(tel);
-        if (u==null){
+        IqesUser u = userDao.findByTel(tel);
+        if (u == null) {
             throw new Exception("This account is not registered");
-        }else {
-            if (!password.equals(u.getPassword())){
+        } else {
+            if (!password.equals(u.getPassword())) {
                 throw new Exception("The account or password is wrong");
-            }else{
-                userDTO=new UserDTO(u);
+            } else {
+                userDTO = new UserDTO(u);
             }
         }
         return userDTO;
@@ -56,14 +68,14 @@ public class UserService {
 
     public void feedback(long userId, String context) throws Exception {
         System.out.println("feedback,without picture");
-        UserFeedback userFeedback=new UserFeedback();
+        UserFeedback userFeedback = new UserFeedback();
         /**
          * 绑定用户
          */
-        IqesUser user=userDao.findOne(userId);
-        if (user==null){
+        IqesUser user = userDao.findOne(userId);
+        if (user == null) {
             throw new Exception("this user is not exist!");
-        }else {
+        } else {
             userFeedback.setIqesUser(user);
         }
         /**
@@ -89,6 +101,49 @@ public class UserService {
 //            }
 //            userFeedback.setPhotoUrl(request.getServletContext().getContextPath()+"/photo/feedback/"+fileName);
 //        }
-       userFeedbackDao.save(userFeedback);
+        userFeedbackDao.save(userFeedback);
     }
+
+    public JSONObject checkOrder(String customerName, long restaurantId) {
+
+        RabbitCarrier rabbitCarrier = new RabbitCarrier();
+        rabbitCarrier.setServiceName("QueueService");
+        rabbitCarrier.setMethodName("checkOrder");
+
+        JSONObject parameterJsonObject = new JSONObject();
+        parameterJsonObject.put("customerName", customerName);
+
+        rabbitCarrier.setParameter(JSONObject.toJSONString(parameterJsonObject));
+
+        JSONObject jsonObject = RabbitMqSendMessageUtils.sendMessage(rabbitCarrier, String.valueOf(restaurantId));
+        return jsonObject;
+    }
+
+    public JSONObject getUserOrder(long userId, long restaurantId) {
+
+
+        RabbitCarrier rabbitCarrier = new RabbitCarrier();
+        rabbitCarrier.setServiceName("QueueService");
+        rabbitCarrier.setMethodName("checkOrder");
+
+        JSONObject parameterJsonObject = new JSONObject();
+        String customerName = userDao.findOne(userId).getUniqueName();
+        parameterJsonObject.put("customerName", customerName);
+
+        rabbitCarrier.setParameter(JSONObject.toJSONString(parameterJsonObject));
+
+        JSONObject jsonObject = RabbitMqSendMessageUtils.sendMessage(rabbitCarrier, String.valueOf(restaurantId));
+        /**
+         * load restaurant info
+         */
+        jsonObject.put("restaurantInfo",restaurantDao.getOne(restaurantId));
+
+        return jsonObject;
+    }
+
 }
+
+
+
+
+

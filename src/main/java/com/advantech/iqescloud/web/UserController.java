@@ -77,4 +77,54 @@ public class UserController {
         return jsonObject.toString();
     }
 
+    @RequestMapping(value = "/order/userName",method = RequestMethod.GET)
+    public String checkUserOrder(@RequestParam(value = "restaurantId")long restaurantId,
+                                 @RequestParam(value = "userName") String userName){
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("localResponse",userService.checkOrder(userName,restaurantId));
+            jsonObject.put("Version","1.0");
+            jsonObject.put("ErrorCode","0");
+        }catch (Exception e){
+            jsonObject.put("Version", "1.0");
+            jsonObject.put("ErrorCode", "1");
+            jsonObject.put("ErrorMessage", e.getMessage());
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    @RequestMapping(value = "/order/userId",method = RequestMethod.GET)
+    public String checkUserOrder(@RequestParam(value = "restaurantId")long restaurantId,
+                                 @RequestParam(value = "userId") long userId){
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("localResponse",userService.getUserOrder(userId,restaurantId));
+            jsonObject.put("Version","1.0");
+            jsonObject.put("ErrorCode","0");
+        }catch (Exception e){
+            jsonObject.put("Version", "1.0");
+            jsonObject.put("ErrorCode", "1");
+            jsonObject.put("ErrorMessage", e.getMessage());
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    @RequestMapping(value = "/test",method = RequestMethod.GET)
+    public String test(){
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("aa","aa");
+            jsonObject.put("Version","1.0");
+            jsonObject.put("ErrorCode","0");
+        }catch (Exception e){
+            jsonObject.put("Version", "1.0");
+            jsonObject.put("ErrorCode", "1");
+            jsonObject.put("ErrorMessage", e.getMessage());
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
 }

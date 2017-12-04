@@ -25,7 +25,7 @@ public class ShowController {
     public String showHomePage(){
         JSONObject jsonObject = new JSONObject();
 
-       List<JSONObject> restaurantList=null;
+       List<JSONObject> restaurantList;
 
         try {
             restaurantList=showService.appHomePage();
@@ -46,6 +46,22 @@ public class ShowController {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("menus",showService.getMenus(restaurantId));
+            jsonObject.put("Version", "1.0");
+            jsonObject.put("ErrorCode", "0");
+        } catch (Exception e) {
+            e.printStackTrace();
+            jsonObject.put("Version", "1.0");
+            jsonObject.put("ErrorCode", "1");
+            jsonObject.put("ErrorMessage", e.getMessage());
+        }
+        return JSONObject.toJSONString(jsonObject, SerializerFeature.WriteMapNullValue);
+    }
+
+    @RequestMapping(value = "/menus/kinds",method = RequestMethod.GET)
+    public String showMenusByKinds(@RequestParam(value = "restaurantId") long restaurantId){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("response",showService.getMenusContainKinds(restaurantId));
             jsonObject.put("Version", "1.0");
             jsonObject.put("ErrorCode", "0");
         } catch (Exception e) {

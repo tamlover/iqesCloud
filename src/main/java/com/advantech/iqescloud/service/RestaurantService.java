@@ -18,19 +18,19 @@ public class RestaurantService {
     @Autowired
     private RestaurantDao restaurantDao;
 
-    public void updateInfo(String jsonMessage){
-        RestaurantDTO restaurantDTO= JSON.parseObject(jsonMessage,RestaurantDTO.class);
+    public void updateInfo(String jsonMessage) {
+        RestaurantDTO restaurantDTO = JSON.parseObject(jsonMessage, RestaurantDTO.class);
         String message;
         Restaurant restaurant;
-        if (restaurantDTO.getCloudId()==null){
-            message="cloudId is empty";
-        }else{
-            restaurant=restaurantDao.findOne(restaurantDTO.getCloudId());
-            if (restaurant==null){
-                message="The restaurant is non-existent";
-            }else{
+        if (restaurantDTO.getCloudId() == null) {
+            message = "cloudId is empty";
+        } else {
+            restaurant = restaurantDao.findOne(restaurantDTO.getCloudId());
+            if (restaurant == null) {
+                message = "The restaurant is non-existent";
+            } else {
                 restaurantDao.save(new Restaurant(restaurantDTO));
-                message="update successful";
+                message = "update successful";
             }
         }
         System.out.println(message);

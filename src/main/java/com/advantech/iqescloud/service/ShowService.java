@@ -48,4 +48,15 @@ public class ShowService {
         JSONObject jsonObject= RabbitMqSendMessageUtils.sendMessage(rabbitCarrier,String.valueOf(restaurantID));
         return jsonObject;
     }
+
+    public JSONObject getMenusContainKinds(long restaurantID) throws IOException, InterruptedException {
+
+        RabbitCarrier rabbitCarrier=new RabbitCarrier();
+        rabbitCarrier.setServiceName("APPShowService");
+        rabbitCarrier.setMethodName("getMenusContainKinds");
+
+
+        JSONObject jsonObject= RabbitMqSendMessageUtils.sendMessage(rabbitCarrier,String.valueOf(restaurantID));
+        return jsonObject;
+    }
 }

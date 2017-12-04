@@ -57,11 +57,12 @@ public class QueueController {
     @RequestMapping(value = "/confirmQueue", method = RequestMethod.PATCH)
     public String getTime(@RequestParam(value = "queueId", defaultValue = "0")long queueId,
                           @RequestParam(value = "tel", defaultValue = "")String tel,
-                          @RequestParam(value = "restaurantId")long restaurantId){
+                          @RequestParam(value = "restaurantId")long restaurantId,
+                          @RequestParam(value = "userId")long userId){
         System.out.println("确认排队");
         JSONObject jsonObject = new JSONObject();
         try{
-            jsonObject.put("localResponse",queueService.confirmQueue(queueId,tel,restaurantId));
+            jsonObject.put("localResponse",queueService.confirmQueue(queueId,tel,restaurantId,userId));
             jsonObject.put("Version","1.0");
             jsonObject.put("ErrorCode","0");
         }catch (Exception e){
