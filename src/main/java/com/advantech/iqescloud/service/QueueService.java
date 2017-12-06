@@ -109,7 +109,9 @@ public class QueueService {
 
     public void saveQueueHistory(String jsonData) {
 
+        System.out.println("save queueHistory..................");
         QueueInfo queueInfo = JSON.parseObject(jsonData, QueueInfo.class);
+        System.out.println(queueInfo);
         queueInfoDao.save(queueInfo);
         System.out.println("save queueHistory once");
     }

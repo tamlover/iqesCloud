@@ -34,9 +34,12 @@ public class UserService {
     private RestaurantDao restaurantDao;
 
 
-    public String saveUser(UserDTO userDTO) {
+    public String saveUser(UserDTO userDTO) throws Exception {
 
         IqesUser user = new IqesUser();
+        if (userDTO.getTel()==null||userDTO.getPassword()==null){
+            throw new Exception("The account or password cannot be empty");
+        }
         if (userDTO.getUserName() == null) {
             user.setUserName("unnamed");
         }

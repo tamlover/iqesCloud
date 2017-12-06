@@ -207,6 +207,7 @@ public class QueueInfo extends IdEntity {
         this.firstExtractTime = firstExtractTime;
     }
 
+
     @Override
     public String toString() {
         return "QueueInfo{" +
@@ -219,11 +220,13 @@ public class QueueInfo extends IdEntity {
                 ", tableTypeId=" + tableTypeId +
                 ", queueStartTime='" + queueStartTime + '\'' +
                 ", queueEndTime='" + queueEndTime + '\'' +
-                ", queueId=" + queueNumber +
+                ", queueNumber='" + queueNumber + '\'' +
                 ", extractCount=" + extractCount +
                 ", callCount=" + callCount +
                 ", seatFlag=" + seatFlag +
                 ", firstExtractTime='" + firstExtractTime + '\'' +
+                ", queueState='" + queueState + '\'' +
                 '}';
     }
 }
+
