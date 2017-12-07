@@ -19,9 +19,9 @@ public class ReceiveLogs {
   @PostConstruct
   public void receiveMessage() throws Exception {
     ConnectionFactory factory = new ConnectionFactory();
-    factory.setHost("172.21.84.91");
-    factory.setUsername("testUser");
-    factory.setPassword("123");
+//    factory.setHost("172.21.84.91");
+//    factory.setUsername("testUser");
+//    factory.setPassword("123");
     Connection connection = factory.newConnection();
     Channel channel = connection.createChannel();
 
