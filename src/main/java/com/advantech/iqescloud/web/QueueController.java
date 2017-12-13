@@ -1,6 +1,6 @@
 package com.advantech.iqescloud.web;
 
-import com.advantech.iqescloud.entity.DTO.QueueInfoDTO;
+import com.advantech.iqescloud.entity.DTO.queueInfo.QueueInfoDTO;
 import com.advantech.iqescloud.service.QueueService;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

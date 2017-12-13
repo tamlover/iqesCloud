@@ -1,6 +1,6 @@
 package com.advantech.iqescloud.entity;
 
-import com.advantech.iqescloud.entity.DTO.RestaurantDTO;
+import com.advantech.iqescloud.entity.DTO.restaurant.RestaurantDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -122,4 +122,5 @@ public class Restaurant extends IdEntity {
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
+
 }

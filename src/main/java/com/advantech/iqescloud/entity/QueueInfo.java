@@ -1,6 +1,8 @@
 package com.advantech.iqescloud.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -28,6 +30,11 @@ public class QueueInfo extends IdEntity {
     private Long tableId;
     /**
      *
+     * 桌子的名字
+     */
+    private String tableNumber;
+    /**
+     *
      *座位号
      * 接收前台的座位号
      * */
@@ -42,6 +49,11 @@ public class QueueInfo extends IdEntity {
      *桌型
      * */
     private  Long tableTypeId;
+
+    /**
+     * 卓类型的名字
+     */
+    private String tableTypeDescribe;
     /**
      *
      *排队开始时间
@@ -52,6 +64,10 @@ public class QueueInfo extends IdEntity {
      *排队结束时间
      * */
     private String queueEndTime;
+    /**
+     * 排队时间
+     */
+    private Integer queueTime;
     /**
      *
      *排队号
@@ -80,8 +96,50 @@ public class QueueInfo extends IdEntity {
 
     /**
      * 排队状态
+     * 1: 入队
+     * 2：就餐
+     * 3：过号删除
      */
     private String queueState;
+    /**
+     * restaurant
+     */
+
+    private Restaurant restaurant;
+
+    public Integer getQueueTime() {
+        return queueTime;
+    }
+
+    public void setQueueTime(Integer queueTime) {
+        this.queueTime = queueTime;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public String getTableNumber() {
+        return tableNumber;
+    }
+
+    public void setTableNumber(String tableNumber) {
+        this.tableNumber = tableNumber;
+    }
+
+    public String getTableTypeDescribe() {
+        return tableTypeDescribe;
+    }
+
+    public void setTableTypeDescribe(String tableTypeDescribe) {
+        this.tableTypeDescribe = tableTypeDescribe;
+    }
 
     public void setTableId(Long tableId) {
         this.tableId = tableId;

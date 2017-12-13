@@ -30,8 +30,11 @@ public class ShowService {
         List<JSONObject> restaurantList= new ArrayList<>();
 
         List<Restaurant> restaurants=restaurantDao.findAll();
+        System.out.println(restaurants.size());
         for (Restaurant r:restaurants){
-            String restaurantID= String.valueOf(r.getId());
+//            String restaurantID= String.valueOf(r.getId());
+            String restaurantID="1";
+            System.out.println(restaurantID);
             JSONObject jsonObject= RabbitMqSendMessageUtils.sendMessage(rabbitCarrier, restaurantID);
             restaurantList.add(jsonObject);
         }

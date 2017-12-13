@@ -1,4 +1,4 @@
-package com.advantech.iqescloud.entity.DTO;
+package com.advantech.iqescloud.entity.DTO.restaurant;
 
 public class RestaurantDTO {
 

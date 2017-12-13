@@ -1,9 +1,11 @@
 package com.advantech.iqescloud.service;
 
-import com.advantech.iqescloud.entity.DTO.QueueInfoDTO;
+import com.advantech.iqescloud.entity.DTO.queueInfo.QueueInfoDTO;
 import com.advantech.iqescloud.entity.QueueInfo;
 import com.advantech.iqescloud.entity.RabbitCarrier;
+import com.advantech.iqescloud.entity.Restaurant;
 import com.advantech.iqescloud.repository.QueueInfoDao;
+import com.advantech.iqescloud.repository.RestaurantDao;
 import com.advantech.iqescloud.repository.UserDao;
 import com.advantech.iqescloud.utils.RabbitMqSendMessageUtils;
 import com.alibaba.fastjson.JSON;
@@ -12,6 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author huqili.tp
+ * obout queue
+ */
 @Service
 @Transactional
 public class QueueService {
@@ -21,6 +27,9 @@ public class QueueService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private RestaurantDao restaurantDao;
 
 
     public JSONObject virtualQueue(QueueInfoDTO queueInfoDTO) {
@@ -111,9 +120,23 @@ public class QueueService {
 
         System.out.println("save queueHistory..................");
         QueueInfo queueInfo = JSON.parseObject(jsonData, QueueInfo.class);
+        Restaurant restaurant=restaurantDao.findOne((long)1);
+        queueInfo.setRestaurant(restaurant);
         System.out.println(queueInfo);
         queueInfoDao.save(queueInfo);
         System.out.println("save queueHistory once");
     }
+
+//    @Scheduled(cron = "* /6 * * * * ?")
+//    public void testScheduler(){
+//        int count = 0;
+//        System.out.println("running"+(count++));
+//    }
+//
+//    @Scheduled(fixedRate = 6000)
+//    public void testScheduler2(){
+//        System.out.println("running"+System.currentTimeMillis());
+//
+//    }
 
 }

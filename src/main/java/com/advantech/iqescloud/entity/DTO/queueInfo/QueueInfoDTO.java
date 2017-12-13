@@ -1,7 +1,10 @@
-package com.advantech.iqescloud.entity.DTO;
+package com.advantech.iqescloud.entity.DTO.queueInfo;
 
 import com.advantech.iqescloud.entity.QueueInfo;
 
+/**
+ * about queue
+ */
 public class QueueInfoDTO {
 
     private Long RestaurantId;
