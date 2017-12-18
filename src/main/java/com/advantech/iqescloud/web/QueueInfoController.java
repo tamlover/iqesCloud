@@ -82,11 +82,11 @@ public class QueueInfoController {
     }
 
     @RequestMapping(value = "/oneRestaurant/chart/churnRate",method = RequestMethod.GET)
-    public String getChurnRate(@RequestParam(value = "restaurantId")long id,@RequestParam(value = "date")String date){
+    public String getChurnRate(@RequestParam(value = "restaurantId")long id){
         JSONObject jsonObject = new JSONObject();
         List<ChurnRateDTO> churnRateDTOList;
         try{
-            churnRateDTOList=queueInfoService.getChurnRateDTO(id,date);
+            churnRateDTOList=queueInfoService.getChurnRateDTO(id);
             jsonObject.put("churnRateList",churnRateDTOList);
             jsonObject.put("Version","1.0");
             jsonObject.put("ErrorCode","0");

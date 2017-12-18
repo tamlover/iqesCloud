@@ -62,7 +62,7 @@ public class IqescloudApplicationTests {
 			QueueInfo queueInfo=new QueueInfo();
 
 			int startTime=random.nextInt(30);
-			int queueTime=random.nextInt(20)+10;
+			int queueTime=random.nextInt(20)+5;
 			int miss=random.nextInt(5);
 			int table=random.nextInt(6);
 
@@ -116,12 +116,12 @@ public class IqescloudApplicationTests {
 	@Test
 	public void addQueueInfoNextDay() throws ParseException {
 		Random random=new Random();
-		Restaurant restaurant=restaurantDao.findOne((long)6);
+		Restaurant restaurant=restaurantDao.findOne((long)3);
 		for (char name='a';name<='z';name++) {
 			QueueInfo queueInfo=new QueueInfo();
 
 			int startTime=random.nextInt(30);
-			int queueTime=random.nextInt(20)+10;
+			int queueTime=random.nextInt(20)+5;
 			int miss=random.nextInt(5);
 			int table=random.nextInt(7);
 
@@ -130,7 +130,7 @@ public class IqescloudApplicationTests {
 			queueInfo.setCustomerTel(random.nextInt(23)+100+"1234");
 			queueInfo.setEatNumber(random.nextInt(8)+3);
 
-			queueInfo.setQueueStartTime(TimeFormatTool.getDaysAfterFromNow(2,startTime));
+			queueInfo.setQueueStartTime(TimeFormatTool.getDaysAfterFromNow(1 ,startTime));
 			queueInfo.setQueueEndTime(TimeFormatTool.getMinutesAfter(queueInfo.getQueueStartTime(),queueTime));
 
 			if (miss==3){
@@ -185,10 +185,10 @@ public class IqescloudApplicationTests {
 
 	@Test
 	public void testGetChurnRateDTO() throws ParseException {
-		List<ChurnRateDTO> churnRateDTOList=queueInfoService.getChurnRateDTO((long)1,"2017-12-12");
-		for (ChurnRateDTO c:churnRateDTOList){
-			System.out.println(c);
-		}
+//		List<ChurnRateDTO> churnRateDTOList=queueInfoService.getChurnRateDTO((long)1,"2017-12-12");
+//		for (ChurnRateDTO c:churnRateDTOList){
+//			System.out.println(c);
+//		}
 	}
 
 	@Test
@@ -222,6 +222,127 @@ public class IqescloudApplicationTests {
 		List<RestaurantsQueuesContrastDTO> rr=queueInfoService.getRestaurantsQueuesContrash(r,"2017-12-13");
 		for (RestaurantsQueuesContrastDTO q:rr){
 			System.out.println(q);
+		}
+	}
+
+	@Test
+	public void addQueueInfoQueueTimeLessThan5() throws ParseException {
+		Random random=new Random();
+		List<QueueInfo> queueInfos=queueInfoDao.getByTableTypeDescribe("小桌");
+		for (QueueInfo q:queueInfos){
+			int queueTime=random.nextInt(9)+3;
+			System.out.println("queueTime:"+queueTime);
+			q.setQueueTime(queueTime);
+			queueInfoDao.save(q);
+
+		}
+	}
+
+	@Test
+	public void addQueueInfoQueueTimeMoreThan30() throws ParseException {
+		Random random=new Random();
+		List<QueueInfo> queueInfos=queueInfoDao.getByTableTypeDescribe("中桌");
+		for (QueueInfo q:queueInfos){
+			int queueTime=random.nextInt(20)+15;
+			System.out.println("queueTime:"+queueTime);
+			q.setQueueTime(queueTime);
+			queueInfoDao.save(q);
+
+		}
+	}
+
+	@Test
+	public void testTableType(){
+		List<String> tables=queueInfoDao.getTableTypeDescribe((long)3);
+		for (String t:tables){
+			System.out.println(t);
+		}
+	}
+
+	@Test
+	public void testQueueTime() throws ParseException {
+//		List<QueueInfo> queueInfos=queueInfoDao.getByQueueTimeBetween((long)1,"小桌",3,7);
+//		System.out.println(queueInfos.size());
+//		List<QueueInfo> queueInfoList=queueInfoDao.getByQueueTimeBetweenAndQueueState((long)1,"小桌",3,7);
+//		System.out.println(queueInfoList.size());
+
+		List<ChurnRateDTO> churnRateDTOList=queueInfoService.getChurnRateDTO((long)1);
+		for (ChurnRateDTO c:churnRateDTOList){
+			System.out.println("________________________________");
+			System.out.println(c);
+			System.out.println("________________________________");
+
+		}
+	}
+
+	public void addQueueInfoBefore(long restaurantId,int beforDay,char n)throws ParseException {
+		Random random=new Random();
+		Restaurant restaurant=restaurantDao.findOne(restaurantId);
+		for (char name='a';name<=n;name++) {
+			QueueInfo queueInfo=new QueueInfo();
+
+			int startTime=random.nextInt(30);
+			int queueTime=random.nextInt(20)+5;
+			int miss=random.nextInt(5);
+			int table=random.nextInt(7);
+
+			queueInfo.setRestaurant(restaurant);
+			queueInfo.setCustomerName(String.valueOf(name)+String.valueOf(name));
+			queueInfo.setCustomerTel(random.nextInt(23)+100+"1234");
+			queueInfo.setEatNumber(random.nextInt(8)+3);
+
+			queueInfo.setQueueStartTime(TimeFormatTool.getDaysBeforFromNow(beforDay ,startTime));
+			queueInfo.setQueueEndTime(TimeFormatTool.getMinutesAfter(queueInfo.getQueueStartTime(),queueTime));
+
+			if (miss==3){
+				queueInfo.setQueueState("2");
+			}else {
+				queueInfo.setQueueState("3");
+			}
+
+
+			if (table<=3) {
+				queueInfo.setTableTypeDescribe("小桌");
+			}else if (table<=5){
+				queueInfo.setTableTypeDescribe("中桌");
+			}else {
+				queueInfo.setTableTypeDescribe("大桌");
+			}
+
+			queueInfo.setQueueTime(queueTime);
+			queueInfo.setSeatFlag(false);
+			queueInfo.setTableNumber("A"+(random.nextInt(100)+100));
+
+			queueInfoDao.save(queueInfo);
+		}
+	}
+
+	@Test
+	public void testAdd() throws ParseException {
+		Random random=new Random();
+		for (int i=4;i<=5;i++){
+			int n=random.nextInt(20);
+			System.out.println(n);
+			char name='f';
+
+			switch (n/2){
+				case 1:name='d';break;
+				case 2:name='r';break;
+				case 3:name='t';break;
+				case 4:name='q';break;
+				case 5:name='w';break;
+				case 6:name='o';break;
+				case 7:name='n';break;
+				case 9:name='s';break;
+				case 8:name='x';break;
+			}
+
+			for (int day=3;day<5;day++){
+				System.out.println("i:"+i);
+				System.out.println("day"+day);
+				System.out.println("name:"+name);
+				addQueueInfoBefore(i,day,name);
+			}
 		}
 	}
 }

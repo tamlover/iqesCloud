@@ -1,35 +1,40 @@
 package com.advantech.iqescloud.entity.DTO.queueInfo;
 
+import com.advantech.iqescloud.entity.POJO.TableTypeChurnRatePOJO;
+
+import java.util.List;
+
 /**
  * @author huqili.tp
  * 流失率
  */
 public class ChurnRateDTO {
 
-    private String date;
-    private Float rate;
+    private Integer queueTime;
+    private List<TableTypeChurnRatePOJO> tableTypeChurnRatePOJOList;
 
-    public String getDate() {
-        return date;
+
+    public List<TableTypeChurnRatePOJO> getTableTypeChurnRatePOJOList() {
+        return tableTypeChurnRatePOJOList;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setTableTypeChurnRatePOJOList(List<TableTypeChurnRatePOJO> tableTypeChurnRatePOJOList) {
+        this.tableTypeChurnRatePOJOList = tableTypeChurnRatePOJOList;
     }
 
-    public Float getRate() {
-        return rate;
+    public Integer getQueueTime() {
+        return queueTime;
     }
 
-    public void setRate(Float rate) {
-        this.rate = rate;
+    public void setQueueTime(Integer queueTime) {
+        this.queueTime = queueTime;
     }
 
     @Override
     public String toString() {
         return "ChurnRateDTO{" +
-                "date='" + date + '\'' +
-                ", rate=" + rate +
+                "queueTime=" + queueTime +
+                ", tableTypeChurnRatePOJOList=" + tableTypeChurnRatePOJOList +
                 '}';
     }
 }

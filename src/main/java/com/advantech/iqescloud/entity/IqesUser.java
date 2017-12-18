@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 
 /**
  * @author huqili.tp
- * 用户的实体类
+ * APP用户的实体类
  */
 @Entity
 public class IqesUser extends IdEntity {

@@ -58,4 +58,10 @@ public class TimeFormatTool {
         String date = SIMPLE_DATE_FORMAT.format(new Date(AfterFromNow));
         return date;
     }
+
+    public static String getDaysBeforFromNow(int day, int minutes) {
+        long AfterFromNow = System.currentTimeMillis() - day * 24 * 60 * 60 * 1000 + minutes * 60 * 1000;
+        String date = SIMPLE_DATE_FORMAT.format(new Date(AfterFromNow));
+        return date;
+    }
 }
