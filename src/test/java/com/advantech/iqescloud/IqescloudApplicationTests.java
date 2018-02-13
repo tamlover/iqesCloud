@@ -44,6 +44,7 @@ public class IqescloudApplicationTests {
 
 	@Test
 	public void contextLoads() {
+
 	}
 
 	@Test

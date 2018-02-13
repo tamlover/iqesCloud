@@ -22,9 +22,9 @@ public class RPCClient {
 
     public RPCClient() throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("172.21.84.91");
-        factory.setUsername("testUser");
-        factory.setPassword("123");
+//        factory.setHost("172.21.84.80");
+//        factory.setUsername("testUser");
+//        factory.setPassword("123");
 
         connection = factory.newConnection();
         channel = connection.createChannel();
